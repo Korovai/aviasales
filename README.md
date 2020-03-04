@@ -1,68 +1,92 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Aviasales
 
-## Available Scripts
+Идея проекта — это прокачать навыки работы со списками билетов, фильтрацией и сортировкой, используя React. Образовательный проект [Хекслет](https://ru.hexlet.io/pages/about?utm_source=github&utm_medium=link&utm_campaign=ru-test-assignments) предоставляет небольшой сервер для тестового задания, который реализует технику long polling для передачи пачек билетов. В проекте реализовывается клиент, который получает случайно сгенерированные билеты от сервера и отрисовывает интерфейс согласно макету в Figma.
 
-In the project directory, you can run:
+## Условия
 
-### `npm start`
+- Использовать React.
+- Использовать JavaScript.
+- Работоспособность в актуальной версии Google Chrome.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Документация по работе с сервером
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Схема работы проста: сначала необходимо инициировать поиск на сервере и получить идентификатор поиска (`searchId`). Далее, с полученным `searchId`, выполняются запросы для получения неотсортированных списков билетов. Билеты прилетают пачками, которые необходимо агрегировать, фильтровать и сортировать согласно выбранным в интерфейсе параметрам. Для усложнения задачи, сервер может на один из запросов ответить ошибкой.
 
-### `npm test`
+### Получение `searchId`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Для получения `searchId` отправляются GET-запрос на `https://front-test.beta.aviasales.ru/search`.
 
-### `npm run build`
+Пример:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Request: `https://front-test.beta.aviasales.ru/search`
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Response: `{"searchId":"4niyd"}`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Получение пачки билетов
 
-### `npm run eject`
+Отправляются GET-запросы на `https://front-test.beta.aviasales.ru/tickets` и передаем searchId полученный из запроса выше GET-параметром.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Пример:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Request: `https://front-test.beta.aviasales.ru/tickets?searchId=4niyd`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Response: `{tickets: [], stop: false}`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Обработка завершения поиска
 
-## Learn More
+Поиск считается завершенным, когда в очередном ответе от сервера придёт значение `{stop: true}`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Пример:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Request: `https://front-test.beta.aviasales.ru/tickets?searchId=4niyd`
 
-### Code Splitting
+Response: `{tickets: [], stop: true}`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+### Структура билета
 
-### Analyzing the Bundle Size
+В списке `tickets` будут лежать билеты следующей структуры:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+```typescript
+interface Ticket {
+  // Цена в рублях
+  price: number
+  // Код авиакомпании (iata)
+  carrier: string
+  // Массив перелётов.
+  // В тестовом задании это всегда поиск "туда-обратно" значит состоит из двух элементов
+  segments: [
+    {
+      // Код города (iata)
+      origin: string
+      // Код города (iata)
+      destination: string
+      // Дата и время вылета туда
+      date: string
+      // Массив кодов (iata) городов с пересадками
+      stops: string[]
+      // Общее время перелёта в минутах
+      duration: number
+    },
+    {
+      // Код города (iata)
+      origin: string
+      // Код города (iata)
+      destination: string
+      // Дата и время вылета обратно
+      date: string
+      // Массив кодов (iata) городов с пересадками
+      stops: string[]
+      // Общее время перелёта в минутах
+      duration: number
+    }
+  ]
+}
+```
 
-### Making a Progressive Web App
+## Макет
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+https://www.figma.com/file/4fQe1lEbo4DARjvNtaU0uJ/Aviasales-test-task
 
-### Advanced Configuration
+##
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Условия данного задания взяты с [репозитория](https://github.com/Hexlet/ru-test-assignments) созданного и поддерживаемого командой и сообществом образовательного проекта [Хекслет](https://ru.hexlet.io/pages/about?utm_source=github&utm_medium=link&utm_campaign=ru-test-assignments). 

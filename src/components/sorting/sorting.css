@@ -1,0 +1,29 @@
+.wrSorting {
+  width: 100%;
+}
+
+.wrSorting button {
+  width: 50%;
+  height: 50px;
+  border: none;
+  background: #FFFFFF;
+}
+
+.wrSorting button:active
+.wrSorting button:focus,
+.wrSorting button:hover {
+  border: none;
+  background: #2196F3;
+  outline: none;
+  color: #FFFFFF;
+}
+
+.btnCheap {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.btnFast {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
