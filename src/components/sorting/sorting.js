@@ -2,11 +2,26 @@ import React from 'react';
 
 import './sorting.css';
 
-const Sorting = ({onSortingTickets}) => {
+const sortingButtons = [
+  {name: 'cheap', label: 'Самый дешевый'},
+  {name: 'fast', label: 'Самый быстрый'}
+];
+
+const Sorting = ({term, onSortingTickets}) => {
+  
+  const buttons = sortingButtons.map((item) => {
+    const {name, label} = item;
+    const isActive = name === term;
+    const classNames = isActive ? 'activeBtn' : 'sortingBtn';
+    
+    return(
+      <button key={name} onClick={() => onSortingTickets(name)} className={classNames} type="submit">{label}</button>
+    );
+  });
+  
   return (
     <div className="wrSorting">
-      <button onClick={() => onSortingTickets('cheap')} className="btnCheap" type="submit">Самый дешевый</button>
-      <button onClick={() => onSortingTickets('fast')} className="btnFast" type="submit">Самый Быстрый</button>
+      {buttons}
     </div>
   );
 };

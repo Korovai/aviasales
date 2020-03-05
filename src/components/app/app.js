@@ -42,13 +42,13 @@ export default class App extends Component {
   
   filterTickets(items, parametr) {
     switch(parametr) {
-      case 0:
+      case 'without':
         return items.filter((item) => item.stopsFromCount === '0');
-      case 1:
+      case 'one':
         return items.filter((item) => item.stopsFromCount === '1');
-      case 2:
+      case 'two':
         return items.filter((item) => item.stopsFromCount === '2');
-      case 3:
+      case 'three':
         return items.filter((item) => item.stopsFromCount === '3');
       default:
         return items;
@@ -72,7 +72,6 @@ export default class App extends Component {
   
   render() {
     const {tickets, loading, filter, term} = this.state;
-    console.log('Filter: ', filter);
     const visibleTickets = this.filterTickets(this.sortingTickets(tickets, term), filter);
     
     return (
@@ -84,7 +83,7 @@ export default class App extends Component {
               <Filter onFilterChange={this.onFilterChange} />
             </div>
             <div className="col-8">
-              <Sorting onSortingTickets={this.onSortingTickets} />
+              <Sorting term={term} onSortingTickets={this.onSortingTickets} />
               <Tickets tickets={visibleTickets} loading={loading} />
             </div>
           </div>

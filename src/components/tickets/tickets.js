@@ -11,14 +11,14 @@ const Tickets = (props) => {
     return <Spinner />
   }
 
-  const elementsList = tickets.map((item) => {
-    const {price, originFrom, destinationFrom, dateFrom, dateArrivalFrom, stopsFrom, stopsFromCount, durationFrom, originTo, destinationTo, dateTo, dateArrivalTo, stopsTo, stopsToCount, durationTo} = item;
-
+  const ticketCards = tickets.map((item) => {
+    const {name, price, originFrom, destinationFrom, dateFrom, dateArrivalFrom, stopsFrom, stopsFromMessage, stopsFromCount, durationFrom, originTo, destinationTo, dateTo, dateArrivalTo, stopsTo, stopsToMessage, stopsToCount, durationTo} = item;
+    
     return (
-      <li className="list-group-item">
+      <li key={name} className="list-group-item">
         <div className="ticket">
           <div className="ticketRow1">
-            <div className="price">{price} P</div>
+            <div className="price">{price} $</div>
             <img src={logoAirline} className="logoAirLine" alt="Logo" />
           </div>
           <div className="ticketRow2">
@@ -32,7 +32,7 @@ const Tickets = (props) => {
                 <div className="infoFlight">{durationFrom}</div>
               </div>
               <div className="flightCol">
-                <div className="labelFlight">{stopsFromCount}</div>
+                <div className="labelFlight">{stopsFromMessage}</div>
                 <div className="infoFlight">{stopsFrom}</div>
               </div>
             </div>
@@ -47,7 +47,7 @@ const Tickets = (props) => {
                 <div className="infoFlight">{durationTo}</div>
               </div>
               <div className="flightCol">
-                <div className="labelFlight">{stopsToCount}</div>
+                <div className="labelFlight">{stopsToMessage}</div>
                 <div className="infoFlight">{stopsTo}</div>
               </div>
             </div>
@@ -60,11 +60,10 @@ const Tickets = (props) => {
   return (
     <div className="wrTickets">
       <ul className="list-group ticketsList">
-        {elementsList}
+        {ticketCards}
       </ul>
     </div>
   );
-
 };
   
 export default Tickets;

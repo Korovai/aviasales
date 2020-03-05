@@ -2,41 +2,32 @@ import React from 'react';
 
 import './filter.css';
 
+const listCheckBoxs = [
+  {name: 'without', label: 'Без пересадок', attribute: 'defaultCheck1'},
+  {name: 'one', label: '1 пересадка', attribute: 'defaultCheck2'},
+  {name: 'two', label: '2 пересадки', attribute: 'defaultCheck3'},
+  {name: 'three', label: '3 пересадки', attribute: 'defaultCheck4'}
+];
+
 const Filter = ({onFilterChange}) => {
+  const checkboxs = listCheckBoxs.map((item) => {
+    const {name, label, attribute} = item;
+    
+    return(
+      <li key={name} className="form-check checkbox">
+        <input onChange={() => onFilterChange(name)} id={attribute} className="form-check-input" type="checkbox" value={name} />
+        <label className="form-check-label" htmlFor={attribute}>
+          {label}
+        </label>
+      </li>
+    );
+  });
+  
   return (
     <div className="wrFilter">
       <span className="titleFilter">Количество пересадок</span>
       <ul className="filter">
-        <li className="form-check">
-          <input onClick={() => onFilterChange('all')} className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-          <label className="form-check-label" htmlFor="defaultCheck1">
-            Все
-          </label>
-        </li>
-        <li className="form-check">
-          <input onClick={() => onFilterChange(0)} className="form-check-input" type="checkbox" value="" id="defaultCheck2" />
-          <label className="form-check-label" htmlFor="defaultCheck2">
-            Без пересадок
-          </label>
-        </li>
-        <li className="form-check">
-          <input onClick={() => onFilterChange(1)} className="form-check-input" type="checkbox" value="" id="defaultCheck3" />
-          <label className="form-check-label" htmlFor="defaultCheck3">
-            1 пересадка
-          </label>
-        </li>
-        <li className="form-check">
-          <input onClick={() => onFilterChange(2)} className="form-check-input" type="checkbox" value="" id="defaultCheck4" />
-          <label className="form-check-label" htmlFor="defaultCheck4">
-            2 пересадки
-          </label>
-        </li>
-        <li className="form-check">
-          <input onClick={() => onFilterChange(3)} className="form-check-input" type="checkbox" value="" id="defaultCheck5" />
-          <label className="form-check-label" htmlFor="defaultCheck5">
-            3 пересадки
-          </label>
-        </li>
+        {checkboxs}
       </ul>
     </div>
   );

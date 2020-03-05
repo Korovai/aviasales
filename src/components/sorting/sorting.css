@@ -2,28 +2,38 @@
   width: 100%;
 }
 
-.wrSorting button {
+.sortingBtn {
   width: 50%;
   height: 50px;
   border: none;
   background: #FFFFFF;
 }
 
-.wrSorting button:active
-.wrSorting button:focus,
-.wrSorting button:hover {
+.sortingBtn:active,
+.sortingBtn:focus,
+.sortingBtn:hover {
+  border: 1px solid #2196F3;
+  box-shadow: none;
+  outline: none;
+  color: #2196F3;
+}
+
+.activeBtn {
+  width: 50%;
+  height: 50px;
   border: none;
   background: #2196F3;
   outline: none;
   color: #FFFFFF;
+  cursor: auto!important;
 }
 
-.btnCheap {
+.sortingBtn:first-child {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
-.btnFast {
+.sortingBtn:last-child {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
