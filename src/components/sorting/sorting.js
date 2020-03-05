@@ -2,11 +2,11 @@ import React from 'react';
 
 import './sorting.css';
 
-const Sorting = () => {
+const Sorting = ({onSortingTickets}) => {
   return (
     <div className="wrSorting">
-      <button className="btnCheap" type="submit">Самый дешевый</button>
-      <button className="btnFast" type="submit">Самый Быстрый</button>
+      <button onClick={() => onSortingTickets('cheap')} className="btnCheap" type="submit">Самый дешевый</button>
+      <button onClick={() => onSortingTickets('fast')} className="btnFast" type="submit">Самый Быстрый</button>
     </div>
   );
 };

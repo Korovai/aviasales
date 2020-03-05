@@ -18,11 +18,11 @@ export default class AviaService {
     return resTickets.tickets.map(this._transformTickets).slice(0, 5);
   }
   
-  getDepartureTime (date) {
+  getDepartureTime(date) {
     return date.match(/\d\d:\d\d/);
   }
   
-  getArrivalTime (start, total) {
+  getArrivalTime(start, total) {
     const h1 = start[0].replace(/[^\d]/g, '').slice(0,2);
     const m1 = start[0].replace(/[^\d]/g, '').slice(2);
     const m2 = total % 60;
@@ -30,38 +30,34 @@ export default class AviaService {
     const mF = ((m1+m2)%60) === (m1+m2) ? m1+m2 : (m1+m2)%60; 
     const m3 = ((m1+m2)%60) === (m1+m2) ? 0 : ((m1+m2)-((m1+m2)%60))/60;
     const hF = ((h1+h2)%24)+m3;
-    
-    return `${hF}:${mF}`;
+    return `${hF}:${mF}`;  
   }
   
-  getStops (arr) {
+  getStops(arr) {
     if(arr.length === 0) {
       return '-';
     } 
-
+    
     return arr.join(' ');
   }
   
-  getStopsCount (arr) {
+  getStopsCount(arr) {
     const count = arr.length;
     switch(count) {
       case 0:
-        return `${count} пересадок`;
-        break;
+        return `${count}`;
       case 1:
-        return `${count} пересадка`;
-        break;
+        return `${count}`;
       case 2:
       case 3:
       case 4:
-        return `${count} пересадки`;
-        break;
+        return `${count}`;
       default:
-        return `${count} пересадок`;
+        return `${count}`;
     };
   }
   
-  getDuration (time) {
+  getDuration(time) {
     const m = time % 60;
     const h = (time - m)/60;
     return `${h}ч ${m}м`
