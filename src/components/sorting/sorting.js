@@ -8,7 +8,6 @@ const sortingButtons = [
 ];
 
 const Sorting = ({term, onSortingTickets}) => {
-  
   const buttons = sortingButtons.map((item) => {
     const {name, label} = item;
     const isActive = name === term;

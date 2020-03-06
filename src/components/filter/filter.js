@@ -9,13 +9,13 @@ const listCheckBoxs = [
   {name: 'three', label: '3 пересадки', attribute: 'defaultCheck4'}
 ];
 
-const Filter = ({onFilterChange}) => {
+const Filter = ({onFilterTickes}) => {
   const checkboxs = listCheckBoxs.map((item) => {
     const {name, label, attribute} = item;
     
     return(
       <li key={name} className="form-check checkbox">
-        <input onChange={() => onFilterChange(name)} id={attribute} className="form-check-input" type="checkbox" value={name} />
+        <input onChange={onFilterTickes} id={attribute} className="form-check-input" type="checkbox" value={name} />
         <label className="form-check-label" htmlFor={attribute}>
           {label}
         </label>

@@ -22,13 +22,13 @@ export default class AviaService {
     return date.match(/\d\d:\d\d/);
   };
   
-  getArrivalTime(start, total) {
-    const h1 = start[0].replace(/[^\d]/g, '').slice(0,2);
-    const m1 = start[0].replace(/[^\d]/g, '').slice(2);
-    const m2 = total % 60;
-    const h2 = (total - m2)/60;
-    const mF = ((m1+m2)%60) === (m1+m2) ? m1+m2 : (m1+m2)%60; 
-    const m3 = ((m1+m2)%60) === (m1+m2) ? 0 : ((m1+m2)-((m1+m2)%60))/60;
+  getArrivalTime(start, total) {  
+    const h1 = Number(start[0].replace(/[^\d]/g, '').slice(0,2));
+    const m1 = Number(start[0].replace(/[^\d]/g, '').slice(2));
+    const m2 = Number(total % 60);
+    const h2 = Number(Math.trunc(total/60));
+    const mF = (m1+m2)%60 === m1+m2 ? m1+m2 : (m1+m2)%60;
+    const m3 = (m1+m2)%60 === m1+m2 ? 0 : ((m1+m2)-((m1+m2)%60))/60;
     const hF = ((h1+h2)%24)+m3;
     return `${hF}:${mF}`;
   };
@@ -74,7 +74,7 @@ export default class AviaService {
   
   getDuration(time) {
     const m = time % 60;
-    const h = (time - m)/60;
+    const h = Math.trunc(time/60);
     return `${h}ч ${m}м`
   };
   

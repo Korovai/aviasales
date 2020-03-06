@@ -8,8 +8,8 @@ const Spinner = () => {
       <div className="row">
         <div className="col-12">
           <div className="wrSpinner">
-            <div class=" spinner loadingio-spinner-cube-6gbr0a8s4z7">
-              <div class="ldio-ljahr7jel5k">
+            <div className="spinner loadingio-spinner-cube-6gbr0a8s4z7">
+              <div className="ldio-ljahr7jel5k">
                 <div></div><div></div><div></div><div></div>
               </div>
             </div>

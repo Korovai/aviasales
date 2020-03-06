@@ -12,7 +12,7 @@ const Tickets = (props) => {
   }
 
   const ticketCards = tickets.map((item) => {
-    const {name, price, originFrom, destinationFrom, dateFrom, dateArrivalFrom, stopsFrom, stopsFromMessage, stopsFromCount, durationFrom, originTo, destinationTo, dateTo, dateArrivalTo, stopsTo, stopsToMessage, stopsToCount, durationTo} = item;
+    const {name, price, originFrom, destinationFrom, dateFrom, dateArrivalFrom, stopsFrom, stopsFromMessage, durationFrom, originTo, destinationTo, dateTo, dateArrivalTo, stopsTo, stopsToMessage, durationTo} = item;
     
     return (
       <li key={name} className="list-group-item">
