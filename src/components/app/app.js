@@ -4,6 +4,7 @@ import Filter from '../filter/filter';
 import Sorting from '../sorting/sorting';
 import Tickets from '../tickets/tickets';
 import AviaService from '../../services/avia-service';
+import ErrorIndicator from '../error-indicator/error-indicator';
 
 import './app.css';
 
@@ -12,6 +13,7 @@ export default class App extends Component {
   state = {
     tickets: {},
     loading: true,
+    error: false,
     filter: [],
     term: 'cheap',
     filteredTickets: []
@@ -30,7 +32,11 @@ export default class App extends Component {
         tickets,
         loading: false
       });
-    });
+    }).catch(this.onError);
+  };
+  
+  onError = (e) => {
+    this.setState({loading: false, error: true});
   };
   
   onFilterTickes = (e) => {
@@ -96,6 +102,9 @@ export default class App extends Component {
             }
           });
         }
+        break;
+      default:
+        console.log('Filtering error!');
     };
     
     this.setState({
@@ -113,19 +122,20 @@ export default class App extends Component {
         return [].slice.call(items).sort((a, b) => {
           return a.price - b.price;
         });
-        break;
       case 'fast':
         return [].slice.call(items).sort((a, b) => {
           return (((a.durationFrom.split('ч')[0])*60) + Number(a.durationFrom.substring(a.durationFrom.search(' '), (a.durationFrom.length) - 1))) - (((b.durationFrom.split('ч')[0])*60) + Number(b.durationFrom.substring(b.durationFrom.search(' '), (b.durationFrom.length) - 1)));
         });
+      default:
+        console.log('Sorting error!');
     };
   };
   
   render() {   
-    const {tickets, loading, filter, term, filteredTickets} = this.state;
+    const {tickets, loading, error, term, filteredTickets} = this.state;
     const visibleTickets = this.sortingTickets((filteredTickets.length === 0 ? tickets : filteredTickets), term);
-  
-    return (
+    
+    const bodyApp = (
       <React.Fragment>
         <Header />
         <div className="container">
@@ -139,6 +149,13 @@ export default class App extends Component {
             </div>
           </div>
         </div>
+      </React.Fragment>
+    );
+    const content = error ? <ErrorIndicator /> : bodyApp;
+  
+    return (
+      <React.Fragment>
+        {content}
       </React.Fragment>
     );
   };

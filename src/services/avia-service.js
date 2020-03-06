@@ -15,7 +15,7 @@ export default class AviaService {
   getTickets = async () => {
     const resSearchId = await this.getResource('/search');
     const resTickets = await this.getResource(`${this._apiTickets}${resSearchId.searchId}`); 
-    return resTickets.tickets.map(this._transformTickets).slice(0, 5);
+    return resTickets.tickets.map(this._transformTickets).slice(0, 10);
   };
   
   getDepartureTime(date) {
@@ -37,6 +37,7 @@ export default class AviaService {
     if(arr.length === 0) {
       return '-';
     } 
+    
     return arr.join(' ');
   };
   
