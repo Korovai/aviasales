@@ -140,10 +140,10 @@ export default class App extends Component {
         <Header />
         <div className="container">
           <div className="row">
-            <div className="col-4">
+            <div className="col-lg-4">
               <Filter onFilterTickes={this.onFilterTickes} />
             </div>
-            <div className="col-8">
+            <div className="col-lg-8">
               <Sorting term={term} onSortingTickets={this.onSortingTickets} />
               <Tickets tickets={visibleTickets} loading={loading} />
             </div>
