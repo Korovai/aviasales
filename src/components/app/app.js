@@ -51,7 +51,6 @@ export default class App extends Component {
     switch(value) {
       case 'without':
         if(checked) {
-          console.log('!!! ', this.state.tickets.filter((item) => item.stopsFromCount === '0').length);
           this.setState((state) => {
             return {
               filteredTickets: [...(this.state.tickets.filter((item) => item.stopsFromCount === '0')), ...state.filteredTickets]

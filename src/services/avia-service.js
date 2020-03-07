@@ -1,5 +1,4 @@
 export default class AviaService {
-  
   _apiBase = 'https://front-test.beta.aviasales.ru';
   _apiTickets = '/tickets?searchId=';
   
@@ -59,6 +58,7 @@ export default class AviaService {
   
   getStopsCount(arr) {
     const count = arr.length;
+    
     switch(count) {
       case 0:
         return `${count}`;
