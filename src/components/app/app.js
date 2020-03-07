@@ -24,6 +24,12 @@ export default class App extends Component {
   componentDidMount() {
     this.loadingTickets(); 
   };
+  
+  componentDidUpdate(prevState) {
+    if(this.state.tickets !== prevState.tickets) {
+      this.filterDeactivation();
+    }
+  };
       
   loadingTickets = () => {
     this.aviaService
@@ -45,6 +51,7 @@ export default class App extends Component {
     switch(value) {
       case 'without':
         if(checked) {
+          console.log('!!! ', this.state.tickets.filter((item) => item.stopsFromCount === '0').length);
           this.setState((state) => {
             return {
               filteredTickets: [...(this.state.tickets.filter((item) => item.stopsFromCount === '0')), ...state.filteredTickets]
@@ -107,14 +114,28 @@ export default class App extends Component {
         console.log('Filtering error!');
     };
     
+    
+    
     this.setState({
       filter: {...this.state.filter, [value]: checked}
     });
   };
   
+  filterDeactivation = () => {
+    if(this.state.tickets.filter((item) => item.stopsFromCount === '0').length === 0) {
+      document.getElementById('without').style.display = 'none';  
+    } else if(this.state.tickets.filter((item) => item.stopsFromCount === '1').length === 0) {
+      document.getElementById('one').style.display = 'none'; 
+    } else if(this.state.tickets.filter((item) => item.stopsFromCount === '2').length === 0) {
+      document.getElementById('two').style.display = 'none';   
+    } else {
+      document.getElementById('three').style.display = 'none';   
+    }  
+  };
+  
   onSortingTickets = (term) => {
     this.setState({term})
-  }
+  };
 
   sortingTickets(items, term) {
     switch(term) {

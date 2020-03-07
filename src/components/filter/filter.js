@@ -14,7 +14,7 @@ const Filter = ({onFilterTickes}) => {
     const {name, label, attribute} = item;
     
     return(
-      <li key={name} className="form-check checkbox">
+      <li key={name} id={name} className="form-check checkbox">
         <input onChange={onFilterTickes} id={attribute} className="form-check-input" type="checkbox" value={name} />
         <label className="form-check-label" htmlFor={attribute}>
           {label}
